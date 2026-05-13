@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>גבע בנייה ופיתוח | בונים את ישראל של מחר</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary:    #1C1C1E;
+      --gold:       #B8935A;
+      --gold-light: #D4AF7A;
+      --gold-pale:  #F0E6D6;
+      --warm-bg:    #F7F4EF;
+      --text-mid:   #5A5A5A;
+      --border:     #E2DDD7;
+      --white:      #FFFFFF;
+      --nav-h:      96px;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+    body {
+      font-family: 'Heebo', 'Arial Hebrew', Arial, sans-serif;
+      direction: rtl;
+      background: var(--white);
+      color: var(--primary);
+      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a, button { -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+
+    img { display: block; max-width: 100%; }
+    a   { text-decoration: none; color: inherit; }
+
+    /* ─── UTILS ─── */
+    .container { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+
+    .section-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 46px);
+      font-weight: 800;
+      line-height: 1.2;
+      color: var(--primary);
+    }
+    .section-title.light { color: var(--white); }
+    .section-body {
+      font-size: 17px;
+      color: var(--text-mid);
+      line-height: 1.85;
+      max-width: 620px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 14px 32px;
+      min-height: 48px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .35s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 2px solid transparent;
+      white-space: nowrap;
+    }
+    .btn svg { flex-shrink: 0; }
+    .btn:active { transform: scale(0.98) translateY(1px) !important; }
+    .btn-gold  { background: var(--gold); color: var(--white); border-color: var(--gold); }
+    .btn-gold:hover  { background: var(--gold-light); border-color: var(--gold-light); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(184,147,90,.35); }
+    .btn-outline { background: transparent; color: var(--white); border-color: rgba(255,255,255,.5); }
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,.08); }
+    .btn-dark  { background: var(--primary); color: var(--white); border-color: var(--primary); }
+    .btn-dark:hover  { background: #2c2c2e; transform: translateY(-2px); }
+    .divider { width: 52px; height: 3px; background: var(--gold); margin: 18px 0 26px; }
+
+    /* ─── NAV ─── */
+    .nav {
+      position: fixed;
+      top: 0; right: 0; left: 0;
+      height: var(--nav-h);
+      background: var(--white);
+      box-shadow: 0 2px 20px rgba(0,0,0,.08);
+      z-index: 1000;
+    }
+    .nav-inner {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      height: 100%;
+      gap: 0;
+    }
+    .logo { display: flex; align-items: center; }
+    .logo-img {
+      height: 82px;
+      width: auto;
+      display: block;
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; justify-self: center; }
+    .nav-links a {
+      font-size: 14px; font-weight: 500; color: var(--text-mid);
+      transition: color .2s; position: relative;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -4px; right: 0; left: 0;
+      height: 2px; background: var(--gold);
+      transform: scaleX(0); transition: transform .25s;
+    }
+    .nav-links a:hover { color: var(--primary); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    .nav-cta { display: flex; align-items: center; gap: 18px; }
+    .nav-phone {
+      font-size: 15px; font-weight: 700; color: var(--primary);
+      display: flex; align-items: center; gap: 7px; direction: ltr;
+    }
+    .nav-phone svg { color: var(--gold); }
+    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--primary); }
+
+    .mobile-menu {
+      display: none; position: fixed;
+      top: var(--nav-h); right: 0; left: 0;
+      background: var(--primary); padding: 24px;
+      z-index: 999; border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+    .mobile-menu li a {
+      font-size: 16px; font-weight: 600; color: var(--white);
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .mobile-menu li a svg { color: var(--gold); }
+
+    /* ─── HERO (CAROUSEL) ─── */
+    .hero {
+      display: grid;
+      /* RTL: col1(right)=content 45%, col2(left)=carousel 55% */
+      grid-template-columns: 45% 55%;
+      height: min(82vh, 760px);
+      min-height: 580px;
+      background: #fff;
+      overflow: hidden;
+      padding-top: var(--nav-h);
+    }
+
+    .hero-content {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 40px 56px 40px 32px;
+      position: relative;
+      z-index: 2;
+      background: var(--white);
+    }
+    .hero-logo {
+      height: 80px; width: auto; display: block; margin-bottom: 22px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--gold-pale); border: 1px solid rgba(184,147,90,.3);
+      color: var(--gold); font-size: 12px; font-weight: 600;
+      padding: 6px 14px; border-radius: 100px;
+      margin-bottom: 18px; width: fit-content; letter-spacing: .5px;
+    }
+    .hero-badge-dot { width: 6px; height: 6px; background: var(--gold); border-radius: 50%; flex-shrink: 0; }
+    .hero-title {
+      font-size: clamp(30px, 3.6vw, 52px);
+      font-weight: 900; color: var(--primary);
+      line-height: 1.1; margin-bottom: 14px;
+    }
+    .hero-title span { color: var(--gold); }
+    .hero-sub {
+      font-size: clamp(14px, 1.2vw, 17px); color: var(--text-mid);
+      margin-bottom: 28px; line-height: 1.8;
+    }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* ── SCROLLING CAROUSEL ── */
+    .hero-carousel {
+      position: relative; display: flex; gap: 10px;
+      padding: 0; overflow: hidden;
+      /* Slight clockwise angle like the reference */
+      transform: rotate(4deg) scale(1.18);
+      transform-origin: center center;
+    }
+    .hero-carousel::before,
+    .hero-carousel::after {
+      content: ''; position: absolute; left: 0; right: 0; height: 90px; z-index: 2; pointer-events: none;
+    }
+    .hero-carousel::before { top: 0;    background: linear-gradient(to bottom, #fff 0%, transparent 100%); }
+    .hero-carousel::after  { bottom: 0; background: linear-gradient(to top,   #fff 0%, transparent 100%); }
+
+    .carousel-col { flex: 1; overflow: hidden; }
+    .scroll-track {
+      display: flex; flex-direction: column; gap: 10px; will-change: transform;
+    }
+    .scroll-track img {
+      width: 100%; aspect-ratio: 3/4;
+      object-fit: cover; border-radius: 16px;
+      flex-shrink: 0; display: block;
+    }
+    .col-1 .scroll-track { animation: carouselUp   38s linear infinite; }
+    .col-2 .scroll-track { animation: carouselDown 46s linear infinite; }
+    .col-3 .scroll-track { animation: carouselUp   32s linear infinite; animation-delay: -12s; }
+    @keyframes carouselUp   { from { transform: translateY(0); }    to { transform: translateY(-50%); } }
+    @keyframes carouselDown { from { transform: translateY(-50%); } to { transform: translateY(0); }    }
+
+    /* ─── STATS BAR ─── */
+    .stats-bar { background: var(--primary); }
+    .stats-bar-inner { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .stat-item { padding: 36px 24px; text-align: center; position: relative; }
+    .stat-item:not(:last-child)::after {
+      content: ''; position: absolute;
+      left: 0; top: 20%; bottom: 20%;
+      width: 1px; background: rgba(255,255,255,.1);
+    }
+    .stat-num {
+      font-size: clamp(32px, 4vw, 50px); font-weight: 900;
+      color: var(--gold); line-height: 1; display: block;
+    }
+    .stat-suffix { font-size: 20px; }
+    .stat-label { font-size: 13px; color: rgba(255,255,255,.5); letter-spacing: .5px; margin-top: 6px; display: block; }
+
+    /* ─── ABOUT ─── */
+    .about { padding: 110px 0; background: var(--warm-bg); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+    .about-img-wrap { position: relative; }
+    .about-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 20px; }
+    .about-img-badge {
+      position: absolute; bottom: -24px; left: -24px;
+      background: var(--gold); color: var(--white);
+      padding: 22px 28px; border-radius: 20px; text-align: center;
+      box-shadow: 0 12px 40px rgba(184,147,90,.4);
+    }
+    .about-img-badge .num { font-size: 42px; font-weight: 900; line-height: 1; display: block; }
+    .about-img-badge .lbl { font-size: 12px; opacity: .9; letter-spacing: .5px; display: block; margin-top: 2px; }
+
+    .about-checks { list-style: none; margin: 28px 0 36px; display: flex; flex-direction: column; gap: 13px; }
+    .about-checks li { display: flex; align-items: flex-start; gap: 11px; font-size: 15px; color: var(--text-mid); }
+    .check-icon {
+      width: 20px; height: 20px; min-width: 20px;
+      background: var(--gold); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 2px; color: var(--white);
+    }
+    .check-icon svg { display: block; }
+
+    /* ─── SERVICES ─── */
+    .services { padding: 110px 0; background: var(--white); }
+    .services-header { text-align: center; margin-bottom: 64px; }
+    .services-header .section-label,
+    .services-header .divider { margin-left: auto; margin-right: auto; }
+    .services-header .section-body { margin: 0 auto; text-align: center; }
+
+    /* Asymmetric bento: right col = featured tall card, left col = 3 stacked cards */
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      grid-template-rows: auto auto auto;
+      gap: 18px;
+    }
+    /* In RTL: col 1 = right side, col 2 = left side */
+    /* Featured card (first child) = right column, spans all 3 rows */
+    .service-card:nth-child(1) { grid-column: 1; grid-row: 1 / span 3; }
+    .service-card:nth-child(2) { grid-column: 2; grid-row: 1; }
+    .service-card:nth-child(3) { grid-column: 2; grid-row: 2; }
+    .service-card:nth-child(4) { grid-column: 2; grid-row: 3; }
+
+    .service-card {
+      background: var(--warm-bg); border-radius: 20px;
+      padding: 36px 32px; border: 1px solid var(--border);
+      transition: all .4s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative; overflow: hidden;
+    }
+    /* Featured card — dark with gold accent */
+    .service-card:nth-child(1) {
+      background: var(--primary);
+      border-color: transparent;
+      padding: 48px 40px;
+    }
+    .service-card:nth-child(1) .service-title { color: var(--white); font-size: 22px; }
+    .service-card:nth-child(1) .service-body  { color: rgba(255,255,255,.62); font-size: 15px; }
+    .service-card:nth-child(1) .service-link  { color: var(--gold-light); }
+    .service-card:nth-child(1) .service-icon  { background: rgba(184,147,90,.15); }
+    .service-card:nth-child(1) .service-icon svg { color: var(--gold); }
+    .service-card:nth-child(1)::after {
+      content: ''; position: absolute; bottom: 0; right: 0;
+      width: 120px; height: 120px;
+      background: radial-gradient(circle, rgba(184,147,90,.18) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+
+    /* Small right cards — icon left, content right (in internal grid) */
+    .service-card:nth-child(2),
+    .service-card:nth-child(3),
+    .service-card:nth-child(4) {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      align-items: start;
+      gap: 0 18px;
+      padding: 26px 26px;
+    }
+    .service-card:nth-child(2) .service-icon,
+    .service-card:nth-child(3) .service-icon,
+    .service-card:nth-child(4) .service-icon { margin-bottom: 0; grid-row: 1 / span 3; align-self: start; }
+    .service-card:nth-child(2) .service-title,
+    .service-card:nth-child(3) .service-title,
+    .service-card:nth-child(4) .service-title { padding-top: 2px; }
+    .service-card:nth-child(2) .service-link,
+    .service-card:nth-child(3) .service-link,
+    .service-card:nth-child(4) .service-link { grid-column: 2; }
+
+    .service-card::before {
+      content: ''; position: absolute;
+      bottom: 0; right: 0; left: 0; height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      transform: scaleX(0); transform-origin: right;
+      transition: transform .4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .service-card:hover {
+      box-shadow: 0 20px 48px rgba(184,147,90,.13);
+      transform: translateY(-5px);
+    }
+    .service-card:nth-child(1):hover {
+      box-shadow: 0 20px 48px rgba(0,0,0,.25);
+    }
+    .service-card:not(:nth-child(1)):hover { background: var(--white); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-card:not(:nth-child(1)):hover .service-icon { background: var(--gold); color: var(--white); }
+
+    .service-icon {
+      width: 52px; height: 52px;
+      background: var(--gold-pale); border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 22px; color: var(--gold);
+      flex-shrink: 0;
+      transition: background .35s cubic-bezier(0.16, 1, 0.3, 1), color .35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .service-title { font-size: 16px; font-weight: 800; color: var(--primary); margin-bottom: 10px; }
+    .service-body  { font-size: 13.5px; color: var(--text-mid); line-height: 1.75; }
+    .service-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 18px; font-size: 13px; font-weight: 700; color: var(--gold);
+      transition: gap .3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .service-link:hover { gap: 10px; }
+
+    /* ─── PROJECTS ─── */
+    .projects { padding: 110px 0; background: var(--warm-bg); }
+    .projects-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 48px; flex-wrap: wrap; gap: 16px;
+    }
+    .projects-grid { display: grid; grid-template-columns: 1.5fr 1fr; grid-template-rows: auto auto; gap: 20px; }
+    .project-card { position: relative; overflow: hidden; border-radius: 20px; cursor: pointer; }
+    .project-card:first-child { grid-row: span 2; }
+    .project-img { width: 100%; height: 100%; min-height: 260px; object-fit: cover; transition: transform .7s cubic-bezier(0.16, 1, 0.3, 1); display: block; }
+    .project-card:first-child .project-img { min-height: 560px; }
+    .project-card:hover .project-img { transform: scale(1.05); }
+    .project-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(17,16,16,.85) 0%, transparent 55%);
+      display: flex; flex-direction: column; justify-content: flex-end; padding: 28px;
+      transition: background .3s;
+    }
+    .project-card:hover .project-overlay { background: linear-gradient(to top, rgba(17,16,16,.9) 0%, rgba(17,16,16,.2) 55%); }
+    .project-tag {
+      display: inline-block; background: var(--gold); color: var(--white);
+      font-size: 11px; font-weight: 700; padding: 3px 10px;
+      border-radius: 3px; letter-spacing: .5px; margin-bottom: 8px; width: fit-content;
+    }
+    .project-name { font-size: 20px; font-weight: 800; color: var(--white); margin-bottom: 6px; }
+    .project-meta { font-size: 13px; color: rgba(255,255,255,.65); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .project-meta span { display: flex; align-items: center; gap: 5px; }
+    .project-meta svg { color: var(--gold-light); }
+
+    /* ─── URBAN RENEWAL ─── */
+    .urban { position: relative; overflow: hidden; }
+    .urban-bg { width: 100%; height: 580px; object-fit: cover; object-position: center; display: block; }
+    .urban-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, rgba(17,16,16,.9) 42%, rgba(17,16,16,.2) 100%);
+      display: flex; align-items: center;
+    }
+    .urban-content { padding: 80px 0; max-width: 560px; }
+    .urban-items { list-style: none; margin: 28px 0 36px; display: flex; flex-direction: column; gap: 16px; }
+    .urban-items li { display: flex; align-items: flex-start; gap: 14px; color: rgba(255,255,255,.82); font-size: 15px; }
+    .num-badge {
+      width: 28px; height: 28px; min-width: 28px;
+      background: var(--gold); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 800; color: var(--white);
+    }
+
+    /* ─── WHY US ─── */
+    .why { padding: 110px 0; background: var(--warm-bg); }
+    .why-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .why-left .section-label,
+    .why-left .divider { display: block; }
+    .why-left .section-body { margin-top: 8px; max-width: 380px; }
+    .why-left-cta { margin-top: 36px; }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .why-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 28px;
+      transition: all .4s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+    .why-card:hover {
+      box-shadow: 0 16px 40px rgba(184,147,90,.12);
+      transform: translateY(-4px);
+      border-color: rgba(184,147,90,.3);
+    }
+    .why-icon {
+      width: 52px; height: 52px; border-radius: 12px;
+      background: var(--gold-pale);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px; color: var(--gold);
+      transition: background .35s cubic-bezier(0.16, 1, 0.3, 1), color .35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .why-card:hover .why-icon { background: var(--gold); color: var(--white); }
+    .why-title { font-size: 16px; font-weight: 800; margin-bottom: 10px; }
+    .why-body  { font-size: 13.5px; color: var(--text-mid); line-height: 1.75; }
+
+    /* ─── TESTIMONIAL ─── */
+    .testimonial { background: var(--primary); padding: 80px 0; }
+    .testimonial-inner { display: grid; grid-template-columns: 1fr 2fr; gap: 64px; align-items: center; }
+    .testimonial-img { width: 100%; aspect-ratio: 3/2; object-fit: cover; border-radius: 16px; opacity: .82; }
+    .quote-mark {
+      width: 48px; height: 48px; background: var(--gold); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white); margin-bottom: 24px;
+    }
+    .quote-text { font-size: clamp(17px, 2vw, 22px); color: var(--white); font-weight: 400; line-height: 1.75; }
+    .quote-author { margin-top: 28px; display: flex; align-items: center; gap: 14px; }
+    .quote-line   { width: 36px; height: 2px; background: var(--gold); flex-shrink: 0; }
+    .quote-author-info span:first-child { display: block; font-size: 15px; font-weight: 700; color: var(--white); }
+    .quote-author-info span:last-child  { font-size: 13px; color: rgba(255,255,255,.5); }
+
+    /* ─── CONTACT ─── */
+    .contact { padding: 110px 0; background: var(--warm-bg); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 64px; align-items: start; }
+    .contact-info-list { list-style: none; margin: 32px 0; display: flex; flex-direction: column; gap: 20px; }
+    .contact-info-list li { display: flex; align-items: flex-start; gap: 14px; font-size: 15px; color: var(--text-mid); }
+    .contact-icon {
+      width: 42px; height: 42px; min-width: 42px;
+      background: var(--gold-pale); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold);
+    }
+    .contact-info-list strong { display: block; color: var(--primary); font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+
+    .contact-form { background: var(--white); border-radius: 24px; padding: 44px; box-shadow: 0 8px 40px rgba(184,147,90,.1); border: 1px solid rgba(184,147,90,.12); }
+    .form-title { font-size: 20px; font-weight: 800; margin-bottom: 28px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--primary); margin-bottom: 6px; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; padding: 12px 14px;
+      border: 1px solid var(--border); border-radius: 10px;
+      font-family: inherit; font-size: 14px; color: var(--primary);
+      background: var(--warm-bg); transition: border-color .2s, box-shadow .2s; direction: rtl;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none; border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(184,147,90,.15); background: var(--white);
+    }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+    .form-submit { width: 100%; padding: 14px; font-size: 16px; }
+
+    /* ─── MAP ─── */
+    .map-section { height: 380px; position: relative; overflow: hidden; }
+    .map-section iframe { width: 100%; height: 100%; border: 0; display: block; }
+    .map-pin {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -60%);
+      background: var(--gold); color: var(--white);
+      padding: 8px 18px; border-radius: 100px;
+      font-size: 13px; font-weight: 700; white-space: nowrap;
+      box-shadow: 0 4px 20px rgba(184,147,90,.45);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .map-pin::after {
+      content: ''; position: absolute;
+      bottom: -6px; left: 50%; transform: translateX(-50%);
+      border: 6px solid transparent; border-top-color: var(--gold); border-bottom: none;
+    }
+
+    /* ─── FOOTER ─── */
+    .footer { background: #0D0D0D; padding: 60px 0 0; }
+    .footer-grid {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 40px; padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .footer-logo { margin-bottom: 16px; }
+    .footer-desc { font-size: 14px; color: rgba(255,255,255,.4); line-height: 1.85; margin-bottom: 24px; }
+    .footer-socials { display: flex; gap: 10px; }
+    .social-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.14);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.45); transition: all .2s;
+    }
+    .social-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .footer-col-title { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 18px; display: block; letter-spacing: .5px; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-links a { font-size: 13px; color: rgba(255,255,255,.4); transition: color .2s; }
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 0; flex-wrap: wrap; gap: 12px;
+    }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,.28); }
+    .footer-copy a { color: rgba(255,255,255,.45); transition: color .2s; }
+    .footer-copy a:hover { color: var(--gold); }
+    .footer-license { font-size: 11px; color: rgba(255,255,255,.22); display: flex; align-items: center; gap: 12px; }
+    .footer-credit { font-size: 12px; color: rgba(255,255,255,.3); }
+    .footer-credit a { color: var(--gold); font-weight: 600; transition: opacity .2s; }
+    .footer-credit a:hover { opacity: .75; }
+
+    /* ─── SCROLL ANIMATIONS ─── */
+    .fade-up { opacity: 0; transform: translateY(32px); transition: opacity .7s cubic-bezier(0.16, 1, 0.3, 1), transform .7s cubic-bezier(0.16, 1, 0.3, 1); }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .service-card:nth-child(1) { grid-column: 1; grid-row: 1 / span 2; }
+      .service-card:nth-child(2) { grid-column: 2; grid-row: 1; }
+      .service-card:nth-child(3) { grid-column: 2; grid-row: 2; }
+      .service-card:nth-child(4) { grid-column: 1 / span 2; grid-row: 3;
+        display: grid; grid-template-columns: 52px 1fr; gap: 0 20px; }
+      .why-inner { grid-template-columns: 1fr; gap: 48px; }
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .hero { grid-template-columns: 48% 52%; }
+      .hero-carousel .col-3 { display: none; }
+      .about-grid { gap: 48px; }
+    }
+
+    @media (max-width: 768px) {
+      :root { --nav-h: 64px; }
+
+      /* ── NAV ── */
+      .nav-links, .nav-cta .btn { display: none; }
+      .nav-phone { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-inner { grid-template-columns: auto auto; gap: 0; }
+      .logo-img { height: 52px; }
+
+      /* ── HERO ── */
+      .hero {
+        grid-template-columns: 1fr;
+        height: auto;
+        min-height: calc(100dvh - var(--nav-h));
+        padding-bottom: 48px;
+      }
+      .hero-content { padding: 32px 20px 40px; }
+      .hero-carousel { display: none; }
+      .hero-badge { font-size: 11px; }
+      .hero-title { font-size: clamp(28px, 8vw, 40px); margin-bottom: 12px; }
+      .hero-sub { font-size: 15px; margin-bottom: 22px; }
+      .hero-actions { gap: 10px; }
+      .hero-actions .btn { padding: 13px 22px; font-size: 14px; min-height: 48px; }
+
+      /* ── STATS BAR ── */
+      .stats-bar-inner { grid-template-columns: repeat(2, 1fr); }
+      .stat-item { padding: 28px 16px; }
+      .stat-item:nth-child(2)::after { display: none; }
+
+      /* ── ABOUT ── */
+      .about { padding: 64px 0 80px; }
+      .about-grid { grid-template-columns: 1fr; gap: 32px; }
+      .about-img-wrap { padding-bottom: 36px; }
+      .about-img-badge { bottom: 0; left: 12px; padding: 16px 20px; }
+      .about-img-badge .num { font-size: 32px; }
+      .about-checks { gap: 10px; }
+
+      /* ── SERVICES ── */
+      .services { padding: 64px 0; }
+      .services-grid { grid-template-columns: 1fr !important; gap: 14px; }
+      .service-card:nth-child(1),
+      .service-card:nth-child(2),
+      .service-card:nth-child(3),
+      .service-card:nth-child(4) { grid-column: auto !important; grid-row: auto !important; }
+      .service-card:nth-child(1) { padding: 32px 28px; }
+      .service-card:nth-child(2),
+      .service-card:nth-child(3),
+      .service-card:nth-child(4) { display: block !important; padding: 24px 24px !important; }
+      .service-card:nth-child(2) .service-icon,
+      .service-card:nth-child(3) .service-icon,
+      .service-card:nth-child(4) .service-icon { margin-bottom: 14px; }
+
+      /* ── PROJECTS ── */
+      .projects { padding: 64px 0; }
+      .projects-grid { grid-template-columns: 1fr; gap: 14px; }
+      .project-card:first-child { grid-row: auto; }
+      .project-card:first-child .project-img { min-height: 260px; }
+      .project-img { min-height: 220px !important; }
+
+      /* ── URBAN ── */
+      .urban-bg { height: 560px; object-position: center; }
+      .urban-overlay { background: linear-gradient(to bottom, rgba(17,16,16,.82) 0%, rgba(17,16,16,.7) 100%); }
+      .urban-content { padding: 48px 0 40px; max-width: 100%; }
+      .urban-items { gap: 14px; }
+
+      /* ── WHY US ── */
+      .why { padding: 64px 0; }
+      .why-inner { grid-template-columns: 1fr; gap: 40px; }
+      .why-left .section-body { max-width: 100%; }
+      .why-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .why-card { padding: 24px 20px; }
+      .why-icon { width: 44px; height: 44px; margin-bottom: 14px; }
+      .why-title { font-size: 14px; }
+      .why-body { font-size: 13px; }
+
+      /* ── TESTIMONIAL ── */
+      .testimonial { padding: 56px 0; }
+      .testimonial-inner { grid-template-columns: 1fr; gap: 32px; }
+      .testimonial-img { aspect-ratio: 16/9; }
+      .quote-text { font-size: 16px; }
+
+      /* ── CONTACT ── */
+      .contact { padding: 64px 0; }
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .contact-form { padding: 28px 20px; border-radius: 16px; }
+      .form-row { grid-template-columns: 1fr; }
+      .contact-info-list { margin: 24px 0; gap: 16px; }
+
+      /* ── FOOTER ── */
+      .footer { padding: 48px 0 0; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom {
+        flex-direction: column; text-align: center;
+        align-items: center; gap: 10px; padding: 16px 0;
+      }
+      .footer-license { flex-wrap: wrap; justify-content: center; gap: 6px; }
+
+      /* ── GENERAL ── */
+      .container { padding: 0 18px; }
+      .section-title { font-size: clamp(24px, 6.5vw, 36px); }
+      .section-body { font-size: 15px; }
+      .divider { margin: 14px 0 20px; }
+    }
+
+    /* ── VERY SMALL PHONES (≤ 390px) ── */
+    @media (max-width: 390px) {
+      .hero-title { font-size: 26px; }
+      .hero-actions { flex-direction: column; }
+      .hero-actions .btn { width: 100%; justify-content: center; }
+      .stat-num { font-size: clamp(26px, 7vw, 38px); }
+      .why-grid { grid-template-columns: 1fr; }
+      .stats-bar-inner { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════ NAV ═══════ -->
+<nav class="nav" id="mainNav">
+  <div class="container nav-inner">
+    <a href="#" class="logo">
+      <img src="geva-logo.png" alt="גבע בנייה ופיתוח" class="logo-img" />
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#about">אודות</a></li>
+      <li><a href="#services">תחומי פעילות</a></li>
+      <li><a href="#projects">פרויקטים</a></li>
+      <li><a href="#urban">התחדשות עירונית</a></li>
+      <li><a href="#contact">צור קשר</a></li>
+    </ul>
+
+    <div class="nav-cta">
+      <a href="tel:037778888" class="nav-phone">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.4 11.6a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.3 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L6.91 8.37a16 16 0 0 0 6.72 6.72l1.73-1.74a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        03-777-8888
+      </a>
+      <a href="#contact" class="btn btn-gold">קבל ייעוץ חינם</a>
+    </div>
+
+    <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="#about" onclick="toggleMenu()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>אודות</a></li>
+    <li><a href="#services" onclick="toggleMenu()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="9" height="15"/><rect x="13" y="2" width="9" height="20"/></svg>תחומי פעילות</a></li>
+    <li><a href="#projects" onclick="toggleMenu()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>פרויקטים</a></li>
+    <li><a href="#urban" onclick="toggleMenu()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/></svg>התחדשות עירונית</a></li>
+    <li><a href="#contact" onclick="toggleMenu()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.4 11.6a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.3 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L6.91 8.37a16 16 0 0 0 6.72 6.72l1.73-1.74a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>צור קשר</a></li>
+  </ul>
+</div>
+
+<!-- ═══════ HERO (CAROUSEL) ═══════ -->
+<section class="hero" id="hero">
+
+  <!-- Col 1 → right (RTL) = content -->
+  <div class="hero-content">
+    <span class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      מעל 30 שנות ניסיון בענף הבנייה הישראלי
+    </span>
+    <h1 class="hero-title">בונים את<br /><span>ישראל של מחר</span></h1>
+    <p class="hero-sub">יזמות, תכנון וביצוע פרויקטי בנייה מובילים<br />מגורים, מסחר, תשתיות והתחדשות עירונית ברחבי הארץ</p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-gold">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        הפרויקטים שלנו
+      </a>
+      <a href="#contact" class="btn btn-dark">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.4 11.6a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.3 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L6.91 8.37a16 16 0 0 0 6.72 6.72l1.73-1.74a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        דברו איתנו
+      </a>
+    </div>
+  </div>
+
+  <!-- Col 2 → left (RTL) = carousel -->
+  <div class="hero-carousel">
+
+    <!-- Column A — scroll up -->
+    <div class="carousel-col col-1">
+      <div class="scroll-track">
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200700_f86fa856-efba-4dfa-93b2-ced273a5561c_min.webp" alt="בניין מגורים" loading="lazy" />
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200703_c9c91429-4c1a-403b-a168-40777800ca0b_min.webp" alt="מגדל יוקרה" loading="lazy" />
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200706_e19724c2-4b6c-4f31-8e2a-3649b2f4fc62_min.webp" alt="חצר פרויקט" loading="lazy" />
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200714_9a7f4afd-b517-4e5b-9dac-625b9022e801_min.webp" alt="אתר בנייה" loading="lazy" />
+        <!-- duplicate for seamless loop -->
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200700_f86fa856-efba-4dfa-93b2-ced273a5561c_min.webp" alt="בניין מגורים" loading="lazy" />
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200703_c9c91429-4c1a-403b-a168-40777800ca0b_min.webp" alt="מגדל יוקרה" loading="lazy" />
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200706_e19724c2-4b6c-4f31-8e2a-3649b2f4fc62_min.webp" alt="חצר פרויקט" loading="lazy" />
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200714_9a7f4afd-b517-4e5b-9dac-625b9022e801_min.webp" alt="אתר בנייה" loading="lazy" />
+      </div>
+    </div>
+
+    <!-- Column B — scroll down -->
+    <div class="carousel-col col-2">
+      <div class="scroll-track">
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200709_b7f4133c-73c5-412e-9928-e32a25ba4be2_min.webp" alt="פנטהאוז" loading="lazy" />
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200711_d3a56250-e1cd-4061-8717-b74493eafc42_min.webp" alt="מבט אווירי" loading="lazy" />
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_185448_a697877e-92b5-4a0f-9242-c044b8ca9f41_min.webp" alt="חזית בניין" loading="lazy" />
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_185454_9f4cc399-f8d1-491b-9aa3-5bfabc84376b_min.webp" alt="לובי יוקרה" loading="lazy" />
+        <!-- duplicate -->
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200709_b7f4133c-73c5-412e-9928-e32a25ba4be2_min.webp" alt="פנטהאוז" loading="lazy" />
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200711_d3a56250-e1cd-4061-8717-b74493eafc42_min.webp" alt="מבט אווירי" loading="lazy" />
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_185448_a697877e-92b5-4a0f-9242-c044b8ca9f41_min.webp" alt="חזית בניין" loading="lazy" />
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_185454_9f4cc399-f8d1-491b-9aa3-5bfabc84376b_min.webp" alt="לובי יוקרה" loading="lazy" />
+      </div>
+    </div>
+
+    <!-- Column C — scroll up, staggered -->
+    <div class="carousel-col col-3">
+      <div class="scroll-track">
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200703_c9c91429-4c1a-403b-a168-40777800ca0b_min.webp" alt="מגדל יוקרה" loading="lazy" />
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200711_d3a56250-e1cd-4061-8717-b74493eafc42_min.webp" alt="מבט אווירי" loading="lazy" />
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200706_e19724c2-4b6c-4f31-8e2a-3649b2f4fc62_min.webp" alt="חצר פרויקט" loading="lazy" />
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200709_b7f4133c-73c5-412e-9928-e32a25ba4be2_min.webp" alt="פנטהאוז" loading="lazy" />
+        <!-- duplicate -->
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200703_c9c91429-4c1a-403b-a168-40777800ca0b_min.webp" alt="מגדל יוקרה" loading="lazy" />
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200711_d3a56250-e1cd-4061-8717-b74493eafc42_min.webp" alt="מבט אווירי" loading="lazy" />
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200706_e19724c2-4b6c-4f31-8e2a-3649b2f4fc62_min.webp" alt="חצר פרויקט" loading="lazy" />
+        <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200709_b7f4133c-73c5-412e-9928-e32a25ba4be2_min.webp" alt="פנטהאוז" loading="lazy" />
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════ STATS BAR ═══════ -->
+<div class="stats-bar" id="statsBar">
+  <div class="container">
+    <div class="stats-bar-inner">
+      <div class="stat-item">
+        <span class="stat-num">30<span class="stat-suffix">+</span></span>
+        <span class="stat-label">שנות ניסיון</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">15K<span class="stat-suffix">+</span></span>
+        <span class="stat-label">יחידות דיור שנמסרו</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">320<span class="stat-suffix">+</span></span>
+        <span class="stat-label">פרויקטים שהושלמו</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">500<span class="stat-suffix">+</span></span>
+        <span class="stat-label">עובדים ומנהלים</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ ABOUT ═══════ -->
+<section class="about fade-up" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap">
+        <img
+          class="about-img"
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_185445_1b43c151-0dd0-4515-863f-3cae59ed4477_min.webp"
+          alt="צוות גבע בנייה באתר עבודה"
+          loading="lazy"
+        />
+        <div class="about-img-badge">
+          <span class="num">1994</span>
+          <span class="lbl">שנת ייסוד החברה</span>
+        </div>
+      </div>
+      <div>
+        <span class="section-label">מי אנחנו</span>
+        <h2 class="section-title">אנחנו גבע –<br />בונים ויוזמים מובילים</h2>
+        <div class="divider"></div>
+        <p class="section-body">
+          חברת גבע בנייה ופיתוח בע"מ היא מבין חברות הבנייה הוותיקות והמובילות בישראל. מאז ייסודה בשנת 1994 אנו עוסקים בייזום, תכנון, בנייה וביצוע פרויקטים מגוונים – מגורים, מסחר, בנייה ציבורית ותשתיות – תוך מחויבות עמוקה לאיכות, אמינות ומצוינות מקצועית.
+        </p>
+        <ul class="about-checks">
+          <li>
+            <span class="check-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            רישיון קבלן ראשי מס' 1 – הסמכה לפרויקטים בהיקפים בלתי מוגבלים
+          </li>
+          <li>
+            <span class="check-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            מוכרת ע"י כל הבנקים למשכנתאות בישראל
+          </li>
+          <li>
+            <span class="check-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            ניסיון מוכח בפינוי-בינוי ותמ"א 38 בערים המרכזיות
+          </li>
+          <li>
+            <span class="check-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            ליווי מלא לרוכשים – מחתימה על חוזה ועד מסירת מפתח
+          </li>
+          <li>
+            <span class="check-icon"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            תקן ISO 9001:2015 לאיכות ובנייה ירוקה
+          </li>
+        </ul>
+        <a href="#contact" class="btn btn-gold">קבל ייעוץ ראשוני</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ SERVICES ═══════ -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="services-header fade-up">
+      <span class="section-label">תחומי הפעילות שלנו</span>
+      <h2 class="section-title">בונים הכל –<br />מגורים, תשתיות וחידוש עירוני</h2>
+      <div class="divider"></div>
+      <p class="section-body">חברת גבע פועלת בכל תחומי הבנייה והפיתוח, עם מחלקות מקצועיות המספקות פתרון מלא לכל פרויקט</p>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card fade-up">
+        <div class="service-icon">
+          <!-- Building2 / Urban -->
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>
+        </div>
+        <h3 class="service-title">התחדשות עירונית</h3>
+        <p class="service-body">מובילים פרויקטי פינוי-בינוי ותמ"א 38 ברחבי הארץ, עם ניסיון מוכח ועשרות פרויקטים מאושרים שכבר הפכו למציאות עבור אלפי דיירים.</p>
+        <a href="#urban" class="service-link">
+          קרא עוד
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </a>
+      </div>
+
+      <div class="service-card fade-up">
+        <div class="service-icon">
+          <!-- Home -->
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3 class="service-title">יזמות ומגורים</h3>
+        <p class="service-body">פרויקטי מגורים יוקרתיים עם תכנון אדריכלי מתקדם, גמר מהשורה הראשונה ומיקומים מבוקשים בגוש דן, ירושלים, הצפון והדרום.</p>
+        <a href="#projects" class="service-link">
+          לפרויקטים
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </a>
+      </div>
+
+      <div class="service-card fade-up">
+        <div class="service-icon">
+          <!-- Landmark / Public -->
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
+        </div>
+        <h3 class="service-title">בנייה ציבורית</h3>
+        <p class="service-body">ניסיון עשיר בבניית מוסדות חינוך, בריאות, מוסדות ממשלתיים ובנייני ציבור, עם הסמכות הגבוהות ביותר בסיווג קבלני – ג' בלתי מוגבל.</p>
+        <a href="#contact" class="service-link">
+          לפרטים נוספים
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </a>
+      </div>
+
+      <div class="service-card fade-up">
+        <div class="service-icon">
+          <!-- Layers / Infrastructure -->
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+        </div>
+        <h3 class="service-title">תשתיות ופיתוח</h3>
+        <p class="service-body">ביצוע עבודות תשתית מורכבות: כבישים, גשרים, ביוב, מים וניקוז לרשויות מקומיות, גופים ממשלתיים וחברות תשתיות לאומיות.</p>
+        <a href="#contact" class="service-link">
+          לפרטים נוספים
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ PROJECTS ═══════ -->
+<section class="projects fade-up" id="projects">
+  <div class="container">
+    <div class="projects-header">
+      <div>
+        <span class="section-label">הפרויקטים שלנו</span>
+        <h2 class="section-title">פרויקטים נבחרים</h2>
+        <div class="divider"></div>
+      </div>
+      <a href="#contact" class="btn btn-dark">לכל הפרויקטים</a>
+    </div>
+    <div class="projects-grid">
+
+      <div class="project-card">
+        <img class="project-img"
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_185503_311e709f-e420-4e56-9c2e-e62fe19f7729_min.webp"
+          alt="מגדלי הרצליה" loading="lazy" />
+        <div class="project-overlay">
+          <span class="project-tag">בשיווק</span>
+          <h3 class="project-name">מגדלי הרצליה – פנינת הים</h3>
+          <div class="project-meta">
+            <span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              הרצליה פיתוח
+            </span>
+            <span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+              280 יח"ד
+            </span>
+            <span>3–6 חדרים</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <img class="project-img"
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_185448_a697877e-92b5-4a0f-9242-c044b8ca9f41_min.webp"
+          alt="נווה שרת פינוי בינוי" loading="lazy" />
+        <div class="project-overlay">
+          <span class="project-tag">התחדשות עירונית</span>
+          <h3 class="project-name">נווה שרת – פינוי בינוי</h3>
+          <div class="project-meta">
+            <span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              תל אביב
+            </span>
+            <span>340 יח"ד</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <img class="project-img"
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_185454_9f4cc399-f8d1-491b-9aa3-5bfabc84376b_min.webp"
+          alt="גרנד אשדוד" loading="lazy" />
+        <div class="project-overlay">
+          <span class="project-tag">נמסר</span>
+          <h3 class="project-name">גרנד אשדוד C</h3>
+          <div class="project-meta">
+            <span>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              אשדוד
+            </span>
+            <span>195 יח"ד</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ URBAN RENEWAL ═══════ -->
+<section class="urban fade-up" id="urban">
+  <img class="urban-bg"
+    src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_185451_be710429-d302-46b4-a615-fcbd1f930363_min.webp"
+    alt="התחדשות עירונית" loading="lazy" />
+  <div class="urban-overlay">
+    <div class="container">
+      <div class="urban-content">
+        <span class="section-label">התחדשות עירונית</span>
+        <h2 class="section-title light">בונים מחדש את<br />שכונות ישראל</h2>
+        <div class="divider"></div>
+        <p style="color:rgba(255,255,255,.75); font-size:16px; line-height:1.85; max-width:480px;">
+          חברת גבע היא מהמובילות בישראל בתחום ההתחדשות העירונית. אנו מלווים דיירים, מעורבים בכל שלבי התהליך ומבטיחים שקיפות מלאה – מרגע החתימה הראשונה ועד מסירת הדירה החדשה.
+        </p>
+        <ul class="urban-items">
+          <li>
+            <span class="num-badge">1</span>
+            <span>פינוי-בינוי – הריסה ובנייה מחדש עם הגדלת זכויות משמעותית לדיירים הקיימים</span>
+          </li>
+          <li>
+            <span class="num-badge">2</span>
+            <span>תמ"א 38 – חיזוק מבנים קיימים, הוספת ממ"ד, מרפסות ומעלית</span>
+          </li>
+          <li>
+            <span class="num-badge">3</span>
+            <span>ייעוץ חינם לדיירים – בדיקת היתכנות ומינוי נציגות ללא עלות</span>
+          </li>
+        </ul>
+        <a href="#contact" class="btn btn-gold">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.4 11.6a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.3 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L6.91 8.37a16 16 0 0 0 6.72 6.72l1.73-1.74a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          בדיקת היתכנות חינם
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ WHY US ═══════ -->
+<section class="why" id="why">
+  <div class="container">
+    <div class="why-inner">
+
+      <div class="why-left fade-up">
+        <span class="section-label">למה לבחור בגבע</span>
+        <h2 class="section-title">המחויבות שלנו<br />לכם ולפרויקט</h2>
+        <div class="divider"></div>
+        <p class="section-body">
+          בגבע בנייה אנחנו לא רק בונים מבנים – אנחנו יוצרים בתים, מחדשים שכונות ומלווים משפחות בכל צעד. הנה למה אלפי לקוחות בוחרים בנו.
+        </p>
+        <div class="why-left-cta">
+          <a href="#contact" class="btn btn-gold">דברו עם מומחה שלנו</a>
+        </div>
+      </div>
+
+      <div class="why-grid fade-up">
+
+        <div class="why-card">
+          <div class="why-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/><circle cx="12" cy="8" r="6"/></svg>
+          </div>
+          <h3 class="why-title">ניסיון מוכח</h3>
+          <p class="why-body">למעלה מ-30 שנה בענף, עם מאות פרויקטים שהושלמו בהצלחה ואלפי משפחות מרוצות.</p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 18 3 22 9 12 22 2 9"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></svg>
+          </div>
+          <h3 class="why-title">איכות ללא פשרות</h3>
+          <p class="why-body">חומרי גלם מהשורה הראשונה ופיקוח הנדסי צמוד בכל שלב – כי כל פרט חשוב.</p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+          </div>
+          <h3 class="why-title">אמינות ושקיפות</h3>
+          <p class="why-body">ליווי אישי לאורך כל שלבי הפרויקט ועמידה בכל הבטחה – מחתימה ועד מסירת מפתח.</p>
+        </div>
+
+        <div class="why-card">
+          <div class="why-icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
+          </div>
+          <h3 class="why-title">חדשנות טכנולוגית</h3>
+          <p class="why-body">מודלי BIM ושיטות בנייה מתקדמות מבטיחים יעילות, דיוק ואיכות גבוהה בכל פרויקט.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ TESTIMONIAL ═══════ -->
+<section class="testimonial fade-up">
+  <div class="container">
+    <div class="testimonial-inner">
+      <div>
+        <img class="testimonial-img"
+          src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_185442_07d8ec7b-960f-40f4-91cd-f3eb05f8a277_min.webp"
+          alt="פרויקט גבע תל אביב" loading="lazy" />
+      </div>
+      <div>
+        <div class="quote-mark">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>
+        </div>
+        <p class="quote-text">
+          "בחרנו בגבע בנייה לפרויקט פינוי-בינוי בשכונה שלנו אחרי שבחנו מספר חברות. הגענו אליהם בגלל המוניטין, ונשארנו בגלל המקצועיות. כל תהליך – מהחתימה הראשונה ועד מסירת הדירה – היה ברור, שקוף ומדויק. דירה חדשה, שכנים מרוצים, וחברה שעמדה בכל מה שהבטיחה."
+        </p>
+        <div class="quote-author">
+          <div class="quote-line"></div>
+          <div class="quote-author-info">
+            <span>דוד ורחל לוי</span>
+            <span>דיירים בפרויקט פינוי-בינוי, נווה שרת תל-אביב</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ CONTACT ═══════ -->
+<section class="contact fade-up" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <span class="section-label">צרו קשר</span>
+        <h2 class="section-title">נשמח לשמוע<br />מכם</h2>
+        <div class="divider"></div>
+        <p class="section-body">
+          אנחנו כאן בשבילכם – פנו אלינו לכל שאלה, בדיקת היתכנות לפרויקט התחדשות עירונית, פרטים על פרויקט קיים, או ייעוץ ראשוני ללא עלות וללא התחייבות.
+        </p>
+        <ul class="contact-info-list">
+          <li>
+            <div class="contact-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.4 11.6a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.3 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L6.91 8.37a16 16 0 0 0 6.72 6.72l1.73-1.74a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div>
+              <strong>טלפון</strong>
+              <a href="tel:037778888" style="direction:ltr; display:block;">03-777-8888</a>
+            </div>
+          </li>
+          <li>
+            <div class="contact-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            </div>
+            <div>
+              <strong>אימייל</strong>
+              <a href="mailto:info@geva-binyan.co.il">info@geva-binyan.co.il</a>
+            </div>
+          </li>
+          <li>
+            <div class="contact-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <strong>כתובת</strong>
+              רחוב הבורסה 23, רמת גן 5271006
+            </div>
+          </li>
+          <li>
+            <div class="contact-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <strong>שעות פעילות</strong>
+              ראשון–חמישי 08:00–18:00 | שישי 08:00–13:00
+            </div>
+          </li>
+        </ul>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a href="tel:037778888" class="btn btn-gold">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.4 11.6a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.3 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L6.91 8.37a16 16 0 0 0 6.72 6.72l1.73-1.74a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            התקשרו עכשיו
+          </a>
+          <a href="https://wa.me/97237778888" class="btn btn-dark">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            וואטסאפ
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <h3 class="form-title">שלחו לנו הודעה</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName">שם פרטי *</label>
+            <input type="text" id="firstName" placeholder="ישראל" required />
+          </div>
+          <div class="form-group">
+            <label for="lastName">שם משפחה *</label>
+            <input type="text" id="lastName" placeholder="ישראלי" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phone">טלפון *</label>
+            <input type="tel" id="phone" placeholder="050-000-0000" required />
+          </div>
+          <div class="form-group">
+            <label for="email">אימייל</label>
+            <input type="email" id="email" placeholder="mail@example.com" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="subject">נושא הפנייה</label>
+          <select id="subject">
+            <option value="">בחרו נושא...</option>
+            <option>בדיקת היתכנות לפינוי-בינוי / תמ"א 38</option>
+            <option>פרטים על פרויקט קיים</option>
+            <option>רכישת דירה / נכס</option>
+            <option>עבודות קבלנות ותשתיות</option>
+            <option>אחר</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">הודעה</label>
+          <textarea id="message" placeholder="כתבו כאן את פרטי הפנייה שלכם..."></textarea>
+        </div>
+        <button type="button" class="btn btn-gold form-submit" onclick="submitForm()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          שלח הודעה
+        </button>
+        <p style="font-size:12px; color:#8A8A8A; margin-top:12px; text-align:center;">
+          הפרטים נשמרים בסודיות מלאה ולא יועברו לגורמים שלישיים
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ MAP ═══════ -->
+<div class="map-section">
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3380.2!2d34.8124!3d32.0880!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151d4b9c!2z4rWt4rWm4rWh4rWr4rWj4rWT4rWh!5e0!3m2!1siw!2sil!4v1"
+    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+    title="מפת משרדי גבע בנייה ופיתוח, רמת גן">
+  </iframe>
+  <div class="map-pin">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/></svg>
+    גבע בנייה ופיתוח – רמת גן
+  </div>
+</div>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <a href="#" class="logo">
+            <img src="geva-logo.png" alt="גבע בנייה ופיתוח" class="logo-img" />
+          </a>
+        </div>
+        <p class="footer-desc">
+          חברת גבע בנייה ופיתוח בע"מ – מעל 30 שנה של יזמות, בנייה וביצוע פרויקטים ברחבי ישראל. בונים בתים, יוצרים קהילות, מחדשים שכונות.
+        </p>
+        <div class="footer-socials">
+          <a href="#" class="social-btn" aria-label="פייסבוק">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="אינסטגרם">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="לינקדאין">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="יוטיוב">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.4a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <span class="footer-col-title">תחומי פעילות</span>
+        <ul class="footer-links">
+          <li><a href="#urban">התחדשות עירונית</a></li>
+          <li><a href="#services">יזמות ומגורים</a></li>
+          <li><a href="#services">בנייה ציבורית</a></li>
+          <li><a href="#services">תשתיות ופיתוח</a></li>
+          <li><a href="#services">שיקום ושימור</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <span class="footer-col-title">החברה</span>
+        <ul class="footer-links">
+          <li><a href="#about">אודות גבע</a></li>
+          <li><a href="#projects">הפרויקטים שלנו</a></li>
+          <li><a href="#contact">דרושים</a></li>
+          <li><a href="#contact">הודעות ועדכונים</a></li>
+          <li><a href="#contact">פורטל דיירים</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <span class="footer-col-title">יצירת קשר</span>
+        <ul class="footer-links">
+          <li><a href="tel:037778888">03-777-8888</a></li>
+          <li><a href="mailto:info@geva-binyan.co.il">info@geva-binyan.co.il</a></li>
+          <li><a href="#contact">הבורסה 23, רמת גן</a></li>
+          <li><a href="#contact">א'–ה' 08:00–18:00</a></li>
+          <li><a href="https://wa.me/97237778888">וואטסאפ עסקי</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">
+        © 2025 גבע בנייה ופיתוח בע"מ. כל הזכויות שמורות. |
+        <a href="#">מדיניות פרטיות</a> |
+        <a href="#">תנאי שימוש</a>
+      </p>
+      <p class="footer-credit">אתר זה נבנה ע"י <a href="https://velo-digital.co.il" target="_blank" rel="noopener noreferrer">VELO Digital</a></p>
+      <div class="footer-license">
+        <span>רישיון קבלן ראשי: מ.ר. 12345</span>
+        <span>|</span>
+        <span>ח.פ. 514000000</span>
+        <span>|</span>
+        <span>ISO 9001:2015</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════ SCRIPTS ═══════ -->
+<script>
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Stagger service / why cards
+  const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 110);
+      }
+    });
+  }, { threshold: 0.05 });
+  document.querySelectorAll('.service-card, .why-card').forEach(el => {
+    el.classList.add('fade-up');
+    cardObserver.observe(el);
+  });
+
+  // Counter animation
+  function animateCounters() {
+    document.querySelectorAll('.stat-num').forEach(el => {
+      const raw    = el.textContent;
+      const match  = raw.match(/[\d.]+/);
+      if (!match) return;
+      const target = parseFloat(match[0]);
+      const suffix = raw.replace(match[0], '');
+      let start = 0;
+      const step = (ts) => {
+        if (!start) start = ts;
+        const p  = Math.min((ts - start) / 1800, 1);
+        const ep = 1 - Math.pow(1 - p, 3);
+        el.textContent = (Number.isInteger(target) ? Math.round(ep * target) : Math.round(ep * target * 10) / 10) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    });
+  }
+  const statsObs = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) { animateCounters(); statsObs.disconnect(); }
+  }, { threshold: 0.5 });
+  statsObs.observe(document.querySelector('.stats-bar'));
+
+  // Form submit
+  function submitForm() {
+    const firstName = document.getElementById('firstName').value.trim();
+    const phone     = document.getElementById('phone').value.trim();
+    if (!firstName || !phone) { alert('אנא מלאו שם וטלפון'); return; }
+    alert('תודה! פנייתכם התקבלה. נציג שלנו יחזור אליכם בהקדם.');
+    document.querySelectorAll('.contact-form input, .contact-form textarea, .contact-form select')
+      .forEach(el => el.value = '');
+  }
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
+  });
+</script>
+</body>
+</html>
