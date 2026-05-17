@@ -277,22 +277,28 @@
     .col-3 .scroll-track { animation: carouselUp   32s linear infinite; animation-delay: -12s; }
     @keyframes carouselUp   { from { transform: translateY(0); }    to { transform: translateY(-50%); } }
     @keyframes carouselDown { from { transform: translateY(-50%); } to { transform: translateY(0); }    }
-    @keyframes scrollLeft   { from { transform: translateX(0); }    to { transform: translateX(-50%); } }
-
     /* ── MOBILE HORIZONTAL STRIP ── */
+    /*
+      7 images × (148px width + 12px gap) = 7 × 160px = 1120px per set.
+      Animation translates exactly –1120px so the first duplicate snaps
+      to where image 1 started — zero white space, pixel-perfect loop.
+    */
+    @keyframes scrollLeft {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-1120px); }
+    }
+
     .hero-mobile-strip {
-      display: none; /* shown only on mobile */
+      display: none;
       width: 100%;
       overflow: hidden;
-      /* Left/right fades */
-      -webkit-mask-image: linear-gradient(to left, transparent 0%, #000 12%, #000 88%, transparent 100%);
-      mask-image: linear-gradient(to left, transparent 0%, #000 12%, #000 88%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to left, transparent 0%, #000 10%, #000 90%, transparent 100%);
+      mask-image:         linear-gradient(to left, transparent 0%, #000 10%, #000 90%, transparent 100%);
     }
     .hero-mobile-track {
       display: flex;
       gap: 12px;
-      width: max-content;
-      animation: scrollLeft 28s linear infinite;
+      animation: scrollLeft 26s linear infinite;
       will-change: transform;
     }
     .hero-mobile-track img {
@@ -709,7 +715,7 @@
         transform: translateY(-50%);
       }
       .logo { /* centered by flex */ }
-      .logo-img { height: 52px; }
+      .logo-img { height: 64px; }
 
       /* ── HERO: text centered, strip below ── */
       .hero {
