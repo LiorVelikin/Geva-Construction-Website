@@ -43,6 +43,7 @@
         transition-duration: 0.01ms !important;
       }
       .scroll-track { animation: none !important; }
+      .hero-mobile-track { animation: none !important; }
     }
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -276,6 +277,32 @@
     .col-3 .scroll-track { animation: carouselUp   32s linear infinite; animation-delay: -12s; }
     @keyframes carouselUp   { from { transform: translateY(0); }    to { transform: translateY(-50%); } }
     @keyframes carouselDown { from { transform: translateY(-50%); } to { transform: translateY(0); }    }
+    @keyframes scrollLeft   { from { transform: translateX(0); }    to { transform: translateX(-50%); } }
+
+    /* ── MOBILE HORIZONTAL STRIP ── */
+    .hero-mobile-strip {
+      display: none; /* shown only on mobile */
+      width: 100%;
+      overflow: hidden;
+      /* Left/right fades */
+      -webkit-mask-image: linear-gradient(to left, transparent 0%, #000 12%, #000 88%, transparent 100%);
+      mask-image: linear-gradient(to left, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    }
+    .hero-mobile-track {
+      display: flex;
+      gap: 12px;
+      width: max-content;
+      animation: scrollLeft 28s linear infinite;
+      will-change: transform;
+    }
+    .hero-mobile-track img {
+      width: 148px;
+      height: 196px;
+      object-fit: cover;
+      border-radius: 16px;
+      flex-shrink: 0;
+      display: block;
+    }
 
     /* ─── STATS BAR ─── */
     .stats-bar { background: var(--primary); position: relative; z-index: 10; }
@@ -665,21 +692,49 @@
     @media (max-width: 768px) {
       :root { --nav-h: 64px; }
 
-      /* ── NAV ── */
-      .nav-links, .nav-cta .btn { display: none; }
-      .nav-phone { display: none; }
+      /* ── NAV: logo centered, hamburger right ── */
+      .nav-links, .nav-cta { display: none; }
       .nav-hamburger { display: flex; }
-      .nav-inner { grid-template-columns: auto auto; gap: 0; }
+      .nav-inner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        padding: 0 16px;
+      }
+      .nav-hamburger {
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .logo { /* centered by flex */ }
       .logo-img { height: 52px; }
 
-      /* ── HERO ── */
+      /* ── HERO: text centered, strip below ── */
       .hero {
         grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
         height: auto;
-        min-height: calc(100dvh - var(--nav-h));
-        padding-bottom: 48px;
+        min-height: auto;
+        padding-bottom: 0;
+        overflow: visible;
       }
-      .hero-content { padding: 32px 20px 40px; }
+      .hero-content {
+        padding: 40px 20px 28px;
+        text-align: center;
+        align-items: center;
+        grid-column: 1;
+        grid-row: 1;
+      }
+      .hero-mobile-strip {
+        display: block;
+        grid-column: 1;
+        grid-row: 2;
+        padding-bottom: 36px;
+      }
+      .hero-badge { align-self: center; }
+      .hero-actions { justify-content: center; }
       .carousel-wrap { display: none; }
       .hero-badge { font-size: 11px; }
       .hero-title { font-size: clamp(28px, 8vw, 40px); margin-bottom: 12px; }
@@ -844,6 +899,27 @@
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.4 11.6a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.3 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L6.91 8.37a16 16 0 0 0 6.72 6.72l1.73-1.74a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         דברו איתנו
       </a>
+    </div>
+  </div>
+
+  <!-- Mobile: horizontal auto-scroll image strip (hidden on desktop) -->
+  <div class="hero-mobile-strip">
+    <div class="hero-mobile-track">
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200700_f86fa856-efba-4dfa-93b2-ced273a5561c_min.webp" alt="בניין מגורים" />
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200703_c9c91429-4c1a-403b-a168-40777800ca0b_min.webp" alt="מגדל יוקרה" />
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200709_b7f4133c-73c5-412e-9928-e32a25ba4be2_min.webp" alt="פנטהאוז" />
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200711_d3a56250-e1cd-4061-8717-b74493eafc42_min.webp" alt="מבט אווירי" />
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200706_e19724c2-4b6c-4f31-8e2a-3649b2f4fc62_min.webp" alt="חצר פרויקט" />
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_185448_a697877e-92b5-4a0f-9242-c044b8ca9f41_min.webp" alt="חזית בניין" />
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_185454_9f4cc399-f8d1-491b-9aa3-5bfabc84376b_min.webp" alt="לובי יוקרה" />
+      <!-- duplicates for seamless loop -->
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200700_f86fa856-efba-4dfa-93b2-ced273a5561c_min.webp" alt="בניין מגורים" />
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200703_c9c91429-4c1a-403b-a168-40777800ca0b_min.webp" alt="מגדל יוקרה" />
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200709_b7f4133c-73c5-412e-9928-e32a25ba4be2_min.webp" alt="פנטהאוז" />
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200711_d3a56250-e1cd-4061-8717-b74493eafc42_min.webp" alt="מבט אווירי" />
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_200706_e19724c2-4b6c-4f31-8e2a-3649b2f4fc62_min.webp" alt="חצר פרויקט" />
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_185448_a697877e-92b5-4a0f-9242-c044b8ca9f41_min.webp" alt="חזית בניין" />
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_32IUdjRhMYdpkqFlgjV0ungUtL0/hf_20260513_185454_9f4cc399-f8d1-491b-9aa3-5bfabc84376b_min.webp" alt="לובי יוקרה" />
     </div>
   </div>
 
